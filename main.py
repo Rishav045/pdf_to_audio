@@ -93,8 +93,11 @@ def pdf_scrapper_summary(pdf_url):
   return summary
 
 def summary_to_audio(pdf_url):
+  delete_folder(pdf_url.split('.')[0])
   create_folder(pdf_url.split('.')[0])
-  summary = pdf_scrapper_summary(pdf_url)
+  
+  summary = pdf_scrapper_summary(f"uploads/{pdf_url}")
+  print(summary)
   links=[]
   count =0
   for item in summary:
@@ -131,7 +134,25 @@ async def getSummary(file : UploadFile =File(...)):
 
 @app.post("/audio")
 async def getAudio(file : UploadFile= File(...)):
-   lists= summary_to_audio(file.filename)
-   return {"lists":lists}
+
+  # contents =await file.read()
+  # print(contents)
+  upload_dir = "uploads"
+
+    # Create the directory if it doesn't exist
+  os.makedirs(upload_dir, exist_ok=True)
+
+    # Define the file path where you want to save the uploaded file
+  file_path = os.path.join(upload_dir, file.filename)
+
+    # Open the file and write the contents
+  with open(file_path, "wb") as f:
+        shutil.copyfileobj(file.file, f)
+  lists= summary_to_audio(file.filename)
+  delete_folder("uploads")
+  return {"lists":lists}
+  
+     
+  # return {"filename":file.filename }
 
 
