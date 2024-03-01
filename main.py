@@ -148,9 +148,10 @@ async def getSummary(file : UploadFile =File(...)):
    with open(file_path, "wb") as f:
         shutil.copyfileobj(file.file, f)
   
-   delete_folder("uploads")
+   
    summary=summary1(file.filename)
    print(summary)
+   delete_folder("uploads")
    return {"summary":summary}
 
 @app.post("/audio")
