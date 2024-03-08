@@ -15,8 +15,7 @@ import cloudinary.uploader
 import cloudinary.api
 import cloudinary.utils
 import shutil
-import nest_asyncio
-nest_asyncio.apply()
+import asyncio
 
 genai.configure(api_key="AIzaSyBjJkjihTUrVF0JbVEBLUZ5kwZyzzJzROs")
 cloudinary.config(cloud_name="dhxj4w8th",api_key="159331216765633",api_secret="cbYQHEPDovgv9NgYHvWy4Krr-sk")
@@ -80,7 +79,10 @@ def pdf_scrapper_summary(pdf_url):
     api_key="llx-u4QviUAaditxpnyA6GmtOFLvXpvRVBCFxVYz8yyFfweodKNw",  # can also be set in your env as LLAMA_CLOUD_API_KEY
     result_type="text"  # "markdown" and "text" are available
 )
-  documents= parser.load_data(pdf_url)
+  async def read_parse(pdf):
+    return await parser.aload_data(pdf_file)
+  
+  documents= asyncio.run(read_parse(pdf_url))
   word_count = len(documents[0].text.split(" "))
   words=documents[0].text.split(" ")
   paragraphs = word_count//3000
