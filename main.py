@@ -90,7 +90,7 @@ def pdf_scrapper_summary(pdf_url):
     temp = " ".join(words[start_pointer:end_pointer])
     text.append(temp)
     start_pointer = start_pointer+3000
-  if(paragraphs*3000!=words_count):
+  if(paragraphs*3000!=word_count):
     last = " ".join(words[start_pointer:word_count])
     text.append(last)
   # for section in doc.sections():
