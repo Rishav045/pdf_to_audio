@@ -15,6 +15,8 @@ import cloudinary.uploader
 import cloudinary.api
 import cloudinary.utils
 import shutil
+import nest_asyncio
+nest_asyncio.apply()
 
 genai.configure(api_key="AIzaSyBjJkjihTUrVF0JbVEBLUZ5kwZyzzJzROs")
 cloudinary.config(cloud_name="dhxj4w8th",api_key="159331216765633",api_secret="cbYQHEPDovgv9NgYHvWy4Krr-sk")
