@@ -305,7 +305,8 @@ async def getSummary(file : UploadFile =File(...)):
    delete_folder(pdf_url.split('.')[0])
    create_folder(pdf_url.split('.')[0])
    
-   extracted_text= await read_parse(pdf_url)
+   extracted_text= await read_parse(f"uploads/{pdf_url}")
+   print(extracted_text)
   #  summary=summary1(file.filename)
    summary=pdf_scrapper_summary(extracted_text)
    print(summary)
