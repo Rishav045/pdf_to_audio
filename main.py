@@ -22,6 +22,13 @@ cloudinary.config(cloud_name="dhxj4w8th",api_key="159331216765633",api_secret="c
 llmsherpa_api_url = "https://readers.llmsherpa.com/api/document/developer/parseDocument?renderFormat=all"
 pdf_reader = LayoutPDFReader(llmsherpa_api_url)
 
+parser = LlamaParse(
+    api_key="llx-u4QviUAaditxpnyA6GmtOFLvXpvRVBCFxVYz8yyFfweodKNw",  # can also be set in your env as LLAMA_CLOUD_API_KEY
+    result_type="text"  # "markdown" and "text" are available
+)
+async def read_parse(pdf):
+  return await parser.aload_data(pdf)
+
 def create_folder(folder_path):
     try:
         # Check if the folder doesn't exist
@@ -67,7 +74,7 @@ def chunking(text,max_token=15000):
       chunk=""
   return required
 
-def pdf_scrapper_summary(pdf_url):
+async def pdf_scrapper_summary(pdf_url):
   doc = pdf_reader.read_pdf(pdf_url)
   sections = []
   for section in doc.sections():
@@ -75,14 +82,9 @@ def pdf_scrapper_summary(pdf_url):
   text=[]
   summary=[]
   print("Extracting the section text.....")
-  parser = LlamaParse(
-    api_key="llx-u4QviUAaditxpnyA6GmtOFLvXpvRVBCFxVYz8yyFfweodKNw",  # can also be set in your env as LLAMA_CLOUD_API_KEY
-    result_type="text"  # "markdown" and "text" are available
-)
-  async def read_parse(pdf):
-    return await parser.aload_data(pdf)
-  
-  documents= asyncio.run(read_parse(pdf_url))
+
+  documents = await read_parse(pdf_url)
+  # documents= asyncio.run(read_parse(pdf_url))
   word_count = len(documents[0].text.split(" "))
   words=documents[0].text.split(" ")
   paragraphs = word_count//3000
