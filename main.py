@@ -27,7 +27,6 @@ parser = LlamaParse(
 )
 async def read_parse(pdf):
   response =await parser.aload_data(pdf)
-  my_list=
   print(type(response))
   print(len(response))
   if len(response):
