@@ -27,6 +27,7 @@ parser = LlamaParse(
 )
 async def read_parse(pdf):
   response =await parser.aload_data(pdf)
+  my_list=
   print(type(response))
   print(len(response))
   if len(response):
@@ -311,9 +312,10 @@ async def getSummary(file : UploadFile =File(...)):
    create_folder(pdf_url.split('.')[0])
    
    extracted_text= await read_parse(f"uploads/{pdf_url}")
-   print(extracted_text)
+   print(f"extracted :-{extracted_text}")
+
   #  summary=summary1(file.filename)
-   summary=pdf_scrapper_summary(extracted_text)
+   summary=pdf_scrapper_summary(extracted_text.json())
    print(summary)
    delete_folder("uploads")
    return {"summary":summary}
