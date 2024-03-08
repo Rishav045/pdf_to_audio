@@ -83,15 +83,15 @@ def pdf_scrapper_summary(documents):
   # sections = []
   # for section in doc.sections():
     # sections.append(section.title)
-  print(f"something : \n {documents}")
+  # print(f"something : \n {documents}")
   text=[]
   summary=[]
   print("Extracting the section text.....")
 
   # documents = await (pdf_url)
   # documents= asyncio.run(read_parse(pdf_url))
-  word_count = len(documents.text.split(" "))
-  words=documents[0].text.split(" ")
+  word_count = len(documents.split(" "))
+  words=documents.split(" ")
   paragraphs = word_count//3000
   start_pointer =0
   for i in range (1,paragraphs+1):
