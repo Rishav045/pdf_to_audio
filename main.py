@@ -29,8 +29,8 @@ async def read_parse(pdf):
   response =await parser.aload_data(pdf)
   print(type(response))
   print(len(response))
-  if len(response):
-     print(response[0])
+  # if len(response):
+  #    print(response[0])
   return response
 
 def create_folder(folder_path):
@@ -78,18 +78,19 @@ def chunking(text,max_token=15000):
       chunk=""
   return required
 
-async def pdf_scrapper_summary(documents):
+def pdf_scrapper_summary(documents):
   # doc = pdf_reader.read_pdf(pdf_url)
   # sections = []
   # for section in doc.sections():
     # sections.append(section.title)
+  print(f"something : \n {documents}")
   text=[]
   summary=[]
   print("Extracting the section text.....")
 
   # documents = await (pdf_url)
   # documents= asyncio.run(read_parse(pdf_url))
-  word_count = len(documents[0].text.split(" "))
+  word_count = len(documents.text.split(" "))
   words=documents[0].text.split(" ")
   paragraphs = word_count//3000
   start_pointer =0
@@ -311,11 +312,11 @@ async def getSummary(file : UploadFile =File(...)):
    create_folder(pdf_url.split('.')[0])
    
    extracted_text= await read_parse(f"uploads/{pdf_url}")
-   print(f"extracted :-{extracted_text[0].text}")
+   print(f"extracted :-{extracted_text[0]}")
 
    
   #  summary=summary1(file.filename)
-   summary=pdf_scrapper_summary(extracted_text[0].text)
+   summary= pdf_scrapper_summary(extracted_text[0].text)
    print(summary)
    delete_folder("uploads")
    return {"summary":summary}
