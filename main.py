@@ -107,6 +107,7 @@ def pdf_scrapper_summary(documents):
   print("Text extracted successfully !!!")
   
   print("Chunking the text ....")
+  print(text)
   result = chunking(text)
   print("Chunking Completed!!")
   count=0
@@ -312,7 +313,7 @@ async def getSummary(file : UploadFile =File(...)):
    create_folder(pdf_url.split('.')[0])
    
    extracted_text= await read_parse(f"uploads/{pdf_url}")
-   print(f"extracted :-{extracted_text[0]}")
+  #  print(f"extracted :-{extracted_text[0]}")
 
    
   #  summary=summary1(file.filename)
