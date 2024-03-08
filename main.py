@@ -108,6 +108,7 @@ def pdf_scrapper_summary(documents):
   
   print("Chunking the text ....")
   print(len(text))
+  print(text)
   # result = chunking(text)
   # print(result)
   print("Chunking Completed!!")
