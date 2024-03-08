@@ -107,11 +107,12 @@ def pdf_scrapper_summary(documents):
   print("Text extracted successfully !!!")
   
   print("Chunking the text ....")
-  print(text)
-  result = chunking(text)
+  # print(text)
+  # result = chunking(text)
+  # print(result)
   print("Chunking Completed!!")
   count=0
-  for item in result:
+  for item in text:
     print(f"Summarizing and paraphrasing the paragaraph no {count+1}")
     response = model.generate_content("Consider you are a teacher so explain briefly following text simply in form of paragraph in "+str((0.75)*len(item))+" words  :-  "+item)
     print(response.text.replace('*',''))
