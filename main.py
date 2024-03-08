@@ -26,7 +26,9 @@ parser = LlamaParse(
     result_type="text"  # "markdown" and "text" are available
 )
 async def read_parse(pdf):
-  return await parser.aload_data(pdf)
+  response =await parser.aload_data(pdf)
+  print(response)
+  return response
 
 def create_folder(folder_path):
     try:
