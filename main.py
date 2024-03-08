@@ -2,6 +2,7 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 import google.generativeai as genai
 model = genai.GenerativeModel('gemini-pro')
+from llama_parse import LlamaParse
 import pathlib
 import os
 import json
@@ -43,7 +44,7 @@ def delete_folder(folder_path):
         print(f"Error deleting folder '{folder_path}': {str(e)}")
 
 
-def chunking(text,max_token=10000):
+def chunking(text,max_token=15000):
   required=[]
   chunk =""
   counter= 0
@@ -73,8 +74,25 @@ def pdf_scrapper_summary(pdf_url):
   text=[]
   summary=[]
   print("Extracting the section text.....")
-  for section in doc.sections():
-    text.append(section.to_text(include_children=True,recurse=True))
+  parser = LlamaParse(
+    api_key="llx-u4QviUAaditxpnyA6GmtOFLvXpvRVBCFxVYz8yyFfweodKNw",  # can also be set in your env as LLAMA_CLOUD_API_KEY
+    result_type="text"  # "markdown" and "text" are available
+)
+  documents= parser.load_data(pdf_url)
+  word_count = len(documents[0].text.split(" "))
+  words=documents[0].text.split(" ")
+  paragraphs = word_count//3000
+  start_pointer =0
+  for i in range (1,paragraphs+1):
+    end_pointer = start_pointer+3000
+    temp = " ".join(words[start_pointer:end_pointer])
+    text.append(temp)
+    start_pointer = start_pointer+3000
+  if(paragraphs*3000!=words_count):
+    last = " ".join(words[start_pointer:word_count])
+    text.append(last)
+  # for section in doc.sections():
+  #   text.append(section.to_text(include_children=True,recurse=True))
   print("Text extracted successfully !!!")
   
   print("Chunking the text ....")
