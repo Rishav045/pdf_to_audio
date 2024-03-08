@@ -74,6 +74,10 @@ def chunking(text,max_token=15000):
       chunk=""
   return required
 
+async def llama_scrapper(pdf_url):
+   result = await read_parse(pdf_url)
+   return result
+
 async def pdf_scrapper_summary(pdf_url):
   doc = pdf_reader.read_pdf(pdf_url)
   sections = []
@@ -83,7 +87,7 @@ async def pdf_scrapper_summary(pdf_url):
   summary=[]
   print("Extracting the section text.....")
 
-  documents = await read_parse(pdf_url)
+  documents = await llama_scrapper(pdf_url)
   # documents= asyncio.run(read_parse(pdf_url))
   word_count = len(documents[0].text.split(" "))
   words=documents[0].text.split(" ")
