@@ -27,8 +27,11 @@ parser = LlamaParse(
 )
 async def read_parse(pdf):
   response =await parser.aload_data(pdf)
-  # print(response)
-  return response.json()
+  print(type(response))
+  print(len(response))
+  if len(response):
+     print(response[0])
+  return response
 
 def create_folder(folder_path):
     try:
