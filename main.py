@@ -15,7 +15,6 @@ import cloudinary.uploader
 import cloudinary.api
 import cloudinary.utils
 import shutil
-import asyncio
 
 genai.configure(api_key="AIzaSyBjJkjihTUrVF0JbVEBLUZ5kwZyzzJzROs")
 cloudinary.config(cloud_name="dhxj4w8th",api_key="159331216765633",api_secret="cbYQHEPDovgv9NgYHvWy4Krr-sk")
@@ -74,20 +73,16 @@ def chunking(text,max_token=15000):
       chunk=""
   return required
 
-async def llama_scrapper(pdf_url):
-   result = await read_parse(pdf_url)
-   return result
-
-async def pdf_scrapper_summary(pdf_url):
-  doc = pdf_reader.read_pdf(pdf_url)
-  sections = []
-  for section in doc.sections():
-    sections.append(section.title)
+async def pdf_scrapper_summary(documents):
+  # doc = pdf_reader.read_pdf(pdf_url)
+  # sections = []
+  # for section in doc.sections():
+    # sections.append(section.title)
   text=[]
-  summary=[]
+  # summary=[]
   print("Extracting the section text.....")
 
-  documents = await llama_scrapper(pdf_url)
+  # documents = await (pdf_url)
   # documents= asyncio.run(read_parse(pdf_url))
   word_count = len(documents[0].text.split(" "))
   words=documents[0].text.split(" ")
@@ -306,9 +301,13 @@ async def getSummary(file : UploadFile =File(...)):
     # Open the file and write the contents
    with open(file_path, "wb") as f:
         shutil.copyfileobj(file.file, f)
-  
+   pdf_url=file.filename
+   delete_folder(pdf_url.split('.')[0])
+   create_folder(pdf_url.split('.')[0])
    
-   summary=summary1(file.filename)
+   extracted_text= await read_parse(pdf_url)
+  #  summary=summary1(file.filename)
+   summary=pdf_scrapper_summary(extracted_text)
    print(summary)
    delete_folder("uploads")
    return {"summary":summary}
