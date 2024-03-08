@@ -107,7 +107,7 @@ def pdf_scrapper_summary(documents):
   print("Text extracted successfully !!!")
   
   print("Chunking the text ....")
-  # print(text)
+  print(len(text))
   # result = chunking(text)
   # print(result)
   print("Chunking Completed!!")
@@ -130,11 +130,11 @@ def summary1(pdf_url):
   summary = pdf_scrapper_summary(f"uploads/{pdf_url}")
   return summary
 
-def summary_to_audio(pdf_url):
-  delete_folder(pdf_url.split('.')[0])
-  create_folder(pdf_url.split('.')[0])
+def summary_to_audio(summary,pdf_url):
+  # delete_folder(pdf_url.split('.')[0])
+  # create_folder(pdf_url.split('.')[0])
   
-  summary = pdf_scrapper_summary(f"uploads/{pdf_url}")
+  # summary = pdf_scrapper_summary(f"uploads/{pdf_url}")
   print(summary)
   links=[]
   count =0
@@ -339,7 +339,18 @@ async def getAudio(file : UploadFile= File(...)):
     # Open the file and write the contents
   with open(file_path, "wb") as f:
         shutil.copyfileobj(file.file, f)
-  lists= summary_to_audio(file.filename)
+  
+  pdf_url=file.filename
+  delete_folder(pdf_url.split('.')[0])
+  create_folder(pdf_url.split('.')[0])
+   
+  extracted_text= await read_parse(f"uploads/{pdf_url}")
+  #  print(f"extracted :-{extracted_text[0]}")
+
+   
+  #  summary=summary1(file.filename)
+  summary= pdf_scrapper_summary(extracted_text[0].text)
+  lists= summary_to_audio(summary=summary,pdf_url=pdf_url)
   delete_folder("uploads")
   return {"lists":lists}
   
