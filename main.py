@@ -80,7 +80,7 @@ def pdf_scrapper_summary(pdf_url):
     result_type="text"  # "markdown" and "text" are available
 )
   async def read_parse(pdf):
-    return await parser.aload_data(pdf_file)
+    return await parser.aload_data(pdf)
   
   documents= asyncio.run(read_parse(pdf_url))
   word_count = len(documents[0].text.split(" "))
