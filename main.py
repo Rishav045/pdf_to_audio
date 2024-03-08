@@ -27,8 +27,8 @@ parser = LlamaParse(
 )
 async def read_parse(pdf):
   response =await parser.aload_data(pdf)
-  print(response)
-  return response
+  # print(response)
+  return response.json()
 
 def create_folder(folder_path):
     try:
@@ -81,7 +81,7 @@ async def pdf_scrapper_summary(documents):
   # for section in doc.sections():
     # sections.append(section.title)
   text=[]
-  # summary=[]
+  summary=[]
   print("Extracting the section text.....")
 
   # documents = await (pdf_url)
