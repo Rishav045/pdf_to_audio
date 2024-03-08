@@ -311,10 +311,11 @@ async def getSummary(file : UploadFile =File(...)):
    create_folder(pdf_url.split('.')[0])
    
    extracted_text= await read_parse(f"uploads/{pdf_url}")
-   print(f"extracted :-{extracted_text}")
+   print(f"extracted :-{extracted_text[0].text}")
 
+   
   #  summary=summary1(file.filename)
-   summary=pdf_scrapper_summary(extracted_text.json())
+   summary=pdf_scrapper_summary(extracted_text[0].text)
    print(summary)
    delete_folder("uploads")
    return {"summary":summary}
