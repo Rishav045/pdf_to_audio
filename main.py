@@ -144,6 +144,7 @@ def summary_to_audio(summary,pdf_url):
      print(f'converting to audio {count+1} paragraph')
      sound.save(pdf_url.split('.')[0]+'/'+f'{count+1}.mp3')
      upload_result = cloudinary.uploader.upload(pdf_url.split('.')[0]+'/'+f'{count+1}.mp3',resource_type="video",format="mp3",public_id=pdf_url.split('.')[0]+'/'+f'{count+1}')
+     print(upload_result)
      links.append(upload_result['url'])
      print(upload_result['url'])
      count= count+1
