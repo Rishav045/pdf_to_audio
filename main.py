@@ -16,7 +16,8 @@ import cloudinary.api
 import cloudinary.utils
 import shutil
 
-genai.configure(api_key="AIzaSyBjJkjihTUrVF0JbVEBLUZ5kwZyzzJzROs")
+# genai.configure(api_key="AIzaSyBjJkjihTUrVF0JbVEBLUZ5kwZyzzJzROs")
+genai.configure(api_key="AIzaSyBt6Q3d-yq2iWz37MNKnR5p7atH3NKH9y8")
 cloudinary.config(cloud_name="dhxj4w8th",api_key="159331216765633",api_secret="cbYQHEPDovgv9NgYHvWy4Krr-sk")
 llmsherpa_api_url = "https://readers.llmsherpa.com/api/document/developer/parseDocument?renderFormat=all"
 pdf_reader = LayoutPDFReader(llmsherpa_api_url)
